@@ -131,7 +131,7 @@
           </div>
         </div>
       </div>
-      <footer class="settings-foot" data-tauri-drag-region="deep">QuickScan v0.2.0 · 轻量桌面扫码工具</footer>
+      <footer class="settings-foot" data-tauri-drag-region="deep">QuickScan v0.2.1 · 轻量桌面扫码工具</footer>
     </section>
 
     <!-- ============ 全屏框选视图 ============ -->
@@ -146,7 +146,9 @@
         ><i class="corner bl"></i><i class="corner br"></i>
         <span class="sel-size" id="sel-size"></span>
       </div>
-      <div class="capture-tip">拖拽框选屏幕上的二维码 · Esc 退出</div>
+      <div class="capture-tip">拖拽框选屏幕上的二维码 · Esc 或右上角 ✕ 退出</div>
+      <!-- 退出按钮：触屏 / 无键盘设备的退出入口（issue #3） -->
+      <button class="capture-exit" id="capture-exit" title="退出截屏 (Esc)" aria-label="退出截屏">×</button>
 
       <!-- 框选结果卡片 -->
       <section class="result-sheet capture-result" id="capture-result" aria-hidden="true">

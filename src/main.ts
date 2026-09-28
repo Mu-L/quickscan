@@ -908,10 +908,16 @@ function bindEvents(): void {
   // 设置页返回
   $("btn-back").addEventListener("click", () => showSettings(false));
 
-  // 框选拖拽
+  // 框选拖拽（pointer 事件对鼠标 / 触屏 / 触控笔统一生效）
   canvas.addEventListener("pointerdown", onPointerDown);
   window.addEventListener("pointermove", onPointerMove);
   window.addEventListener("pointerup", () => void onPointerUp());
+
+  // 触屏支持（issue #3）：长按不弹右键菜单（会打断拖拽框选）
+  overlay.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  // 框选右上角退出按钮：无键盘（平板 / 翻转本触屏模式）也能退出
+  $("capture-exit").addEventListener("click", () => void exitCapture());
 }
 
 // ---------------- 启动 ----------------

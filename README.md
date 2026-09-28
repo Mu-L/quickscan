@@ -21,6 +21,8 @@
 
 - **截屏框选识别**：全屏覆盖 + 拖拽选区（实时尺寸标注），松手即识别
 - **多屏支持**：遮罩铺满所有显示器，可跨屏拖拽框选；小部件在鼠标所在的那块屏上呼出
+- **触屏支持**：手指直接拖拽框选；框选右上角 ✕ 按钮可退出（平板 / 翻转本无需键盘）
+- 开机自启动：注册表写入被拒时自动回退到启动文件夹快捷方式（兼容 Run 键被安全软件锁定的机器）
 - 结果自动分类：链接 / WiFi / 文本；一键复制、浏览器打开
 - **全局快捷键**呼出 / 收起（默认 `Ctrl+Alt+Q`；设置中点击后直接按下新组合键即生效）
 - 极简风格动效
@@ -69,6 +71,8 @@ You can also paste (`Ctrl+V`) or drag an image with a QR code onto the widget.
 
 - **Screen-capture selection**: fullscreen overlay with drag selection (live size hint), decode on release
 - **Multi-monitor**: the overlay spans every display, so selections can be dragged across screens; the widget pops up on whichever monitor the cursor is on
+- **Touch support**: drag to frame with your finger; a ✕ button at the top-right exits capture mode (no keyboard needed on tablets/convertibles)
+- Autostart: falls back to a Startup-folder shortcut when the registry Run key is locked down by security software
 - Auto classification: URL / Wi-Fi / text; one-click copy and open-in-browser
 - **Global hotkey** to show/hide (default `Ctrl+Alt+Q`; in settings, click and press a new combo — applied instantly)
 - Minimalist motion design

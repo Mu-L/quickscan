@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::Mutex;
+mod autostart;
 mod platform;
 use std::time::Duration;
 use tauri::{
@@ -11,7 +12,6 @@ use tauri::{
 };
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
-use tauri_plugin_autostart::{MacosLauncher, ManagerExt};
 
 const DEFAULT_HOTKEY: &str = "Ctrl+Alt+Q";
 const WIDGET_SIZE: (u32, u32) = (420, 400);
@@ -573,19 +573,20 @@ fn exit_capture_mode(app: AppHandle, state: State<'_, AppState>) {
 }
 
 // ---------------- 开机自启动 ----------------
+// 自行实现（见 autostart.rs）：auto-launch 0.5 在 Run 键被安全软件锁定的
+// 机器上报 os error 5 且无回退，这里注册表失败时改写启动文件夹快捷方式
 
 #[tauri::command]
-fn get_autostart(app: AppHandle) -> Result<bool, String> {
-    app.autolaunch().is_enabled().map_err(|e| e.to_string())
+fn get_autostart() -> Result<bool, String> {
+    autostart::is_enabled()
 }
 
 #[tauri::command]
-fn set_autostart(app: AppHandle, enabled: bool) -> Result<(), String> {
-    let auto = app.autolaunch();
+fn set_autostart(enabled: bool) -> Result<(), String> {
     if enabled {
-        auto.enable().map_err(|e| e.to_string())
+        autostart::enable()
     } else {
-        auto.disable().map_err(|e| e.to_string())
+        autostart::disable()
     }
 }
 
@@ -669,7 +670,6 @@ pub fn run() {
         }))
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
-        .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, None))
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, _shortcut, event| {
